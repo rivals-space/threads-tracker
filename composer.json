@@ -1,0 +1,115 @@
+{
+    "type": "project",
+    "license": "proprietary",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.2",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "doctrine/dbal": "^3",
+        "doctrine/doctrine-bundle": "^2.12",
+        "doctrine/doctrine-migrations-bundle": "^3.3",
+        "doctrine/orm": "^3.1",
+        "dragonmantank/cron-expression": "^3.3",
+        "phpdocumentor/reflection-docblock": "^5.3",
+        "phpstan/phpdoc-parser": "^1.27",
+        "symfony/console": "7.0.*",
+        "symfony/doctrine-messenger": "7.0.*",
+        "symfony/dotenv": "7.0.*",
+        "symfony/flex": "^2",
+        "symfony/framework-bundle": "7.0.*",
+        "symfony/http-client": "7.0.*",
+        "symfony/lock": "7.0.*",
+        "symfony/mastodon-notifier": "7.0.*",
+        "symfony/messenger": "7.0.*",
+        "symfony/monolog-bundle": "^3.10",
+        "symfony/notifier": "7.0.*",
+        "symfony/property-access": "7.0.*",
+        "symfony/property-info": "7.0.*",
+        "symfony/rate-limiter": "7.0.*",
+        "symfony/redis-messenger": "7.0.*",
+        "symfony/runtime": "7.0.*",
+        "symfony/scheduler": "7.0.*",
+        "symfony/serializer": "7.0.*",
+        "symfony/twig-bundle": "7.0.*",
+        "symfony/uid": "7.0.*",
+        "symfony/validator": "7.0.*",
+        "symfony/yaml": "7.0.*"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "symfony/maker-bundle": "^1.57",
+        "ekino/phpstan-banned-code": "^1.0",
+        "friendsofphp/php-cs-fixer": "^3.34",
+        "phpstan/extension-installer": "^1.3",
+        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan-symfony": "^1.3",
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-symfony": "^5.0",
+        "symfony/css-selector": "7.0.*",
+        "symfony/stopwatch": "7.0.*",
+        "symfony/var-dumper": "7.0.*",
+        "symfony/web-profiler-bundle": "7.0.*",
+        "vimeo/psalm": "^5.15"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "symfony/flex": true,
+            "symfony/runtime": true,
+            "phpstan/extension-installer": true
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
+        "symfony/polyfill-php73": "*",
+        "symfony/polyfill-php74": "*",
+        "symfony/polyfill-php80": "*",
+        "symfony/polyfill-php81": "*",
+        "symfony/polyfill-php82": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ],
+        "php-cs-fixer": "php -d memory_limit=-1 vendor/bin/php-cs-fixer fix",
+        "phpstan": "php -d memory_limit=-1 vendor/bin/phpstan",
+        "psalm": "PSALM_ALLOW_XDEBUG=1 php -d memory_limit=-1 vendor/bin/psalm",
+        "sa": [
+            "@php-cs-fixer",
+            "@phpstan",
+            "@psalm"
+        ],
+        "reset-db" : "bin/console doctrine:database:drop --force && bin/console doctrine:database:create"
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "7.0.*"
+        }
+    }
+}

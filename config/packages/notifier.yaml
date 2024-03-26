@@ -1,0 +1,4 @@
+framework:
+    notifier:
+        chatter_transports:
+            mastodon: 'mastodon://%env(MASTODON_TOKEN)%@%env(MASTODON_SERVER)%'

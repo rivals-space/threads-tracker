@@ -1,0 +1,35 @@
+{
+	{$CADDY_GLOBAL_OPTIONS}
+
+    servers {
+        metrics
+    }
+
+	frankenphp {
+        {$FRANKENPHP_CONFIG}
+	}
+    order php_server before file_server
+}
+
+{$CADDY_EXTRA_CONFIG}
+
+{$SERVER_NAME:localhost} {
+	log {
+		# Redact the authorization query parameter that can be set by Mercure
+		format filter {
+			wrap console
+			fields {
+				uri query {
+					replace authorization REDACTED
+				}
+			}
+		}
+	}
+
+	root * /srv/app/public
+	encode zstd gzip
+
+	{$CADDY_SERVER_EXTRA_DIRECTIVES}
+
+	php_server
+}

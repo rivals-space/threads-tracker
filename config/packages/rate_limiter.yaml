@@ -1,0 +1,6 @@
+framework:
+  rate_limiter:
+    mastodon_api:
+      policy: 'fixed_window'
+      limit: 300
+      interval: '5 minutes'

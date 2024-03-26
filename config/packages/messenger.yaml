@@ -1,0 +1,27 @@
+framework:
+    messenger:
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
+
+        transports:
+            mastodon: '%env(MESSENGER_TRANSPORT_DSN)%/mastodon'
+            thread_check: '%env(MESSENGER_TRANSPORT_DSN)%/thread_check'
+            failed: 'doctrine://default?queue_name=failed'
+
+        routing:
+            App\Message\FetchMastodonNotificationsMessage: mastodon
+            App\Message\ProcessMastodonNotificationMessage: mastodon
+            App\Message\PostMastodonPrivateMentionMessage: mastodon
+            App\Message\SendUserFederatedNotificationsMessage: mastodon
+
+            App\Message\StartBatchCheckingMessage: thread_check
+            App\Message\CheckThreadUserMessage: thread_check
+
+
+# when@test:
+#    framework:
+#        messenger:
+#            transports:
+#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
+#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
+#                async: 'in-memory://'
