@@ -5,7 +5,7 @@ framework:
 
         transports:
             mastodon: '%env(MESSENGER_TRANSPORT_DSN)%/mastodon'
-            thread_check: '%env(MESSENGER_TRANSPORT_DSN)%/thread_check'
+            threads_check: '%env(MESSENGER_TRANSPORT_DSN)%/threads_check'
             failed: 'doctrine://default?queue_name=failed'
 
         routing:
@@ -14,8 +14,8 @@ framework:
             App\Message\PostMastodonPrivateMentionMessage: mastodon
             App\Message\SendUserFederatedNotificationsMessage: mastodon
 
-            App\Message\StartBatchCheckingMessage: thread_check
-            App\Message\CheckThreadUserMessage: thread_check
+            App\Message\StartBatchCheckingMessage: threads_check
+            App\Message\CheckThreadUserMessage: threads_check
 
 
 # when@test:
