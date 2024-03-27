@@ -41,7 +41,7 @@ services:
       DATABASE_USER: ${POSTGRES_USER:-app}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
       DATABASE_NAME: ${POSTGRES_DB:-app}
-      DATABASE_VERSION: ${POSTGRES_VERSION:-15}
+      DATABASE_VERSION: ${POSTGRES_VERSION:-16}
       MESSENGER_TRANSPORT_DSN: 'redis://redis:6379'
       LOCK_DSN: 'redis://redis:6379'
       LOG_LEVEL: ${LOG_LEVEL:-info}
@@ -52,7 +52,7 @@ services:
   
   ###> doctrine/doctrine-bundle ###
   database:
-    image: postgres:${POSTGRES_VERSION:-15}-alpine
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}
       # You should definitely change the password in production
