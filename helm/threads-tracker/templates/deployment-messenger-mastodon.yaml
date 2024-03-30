@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "threads-tracker.fullname" . }}-messenger-mastodon
+  labels:
+    {{- include "threads-tracker.labels" . | nindent 4 }}
+    "app.kubernetes.io/component": messenger-mastodon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "threads-tracker.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.messenger.mastodon.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "threads-tracker.labels" . | nindent 8 }}
+        {{- with .Values.messenger.mastodon.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.messenger.mastodon.podSecurityContext | nindent 8 }}
+      containers:
+        - name: messenger-mastodon
+          securityContext:
+            {{- toYaml .Values.messenger.mastodon.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.Version }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - bin/console messenger:consume mastodon -v
+          env:
+            {{- include "threads-tracker.env" . | nindent 12 }}
+          resources:
+            {{- toYaml .Values.messenger.mastodon.resources | nindent 12 }}
+      {{- with .Values.messenger.mastodon.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.messenger.mastodon.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.messenger.mastodon.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

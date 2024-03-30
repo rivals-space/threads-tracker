@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "threads-tracker.fullname" . }}-messenger-threads-check
+  labels:
+    {{- include "threads-tracker.labels" . | nindent 4 }}
+    "app.kubernetes.io/component": messenger-threads-check
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "threads-tracker.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.messenger.threadsCheck.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "threads-tracker.labels" . | nindent 8 }}
+        {{- with .Values.messenger.threadsCheck.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.messenger.threadsCheck.podSecurityContext | nindent 8 }}
+      containers:
+        - name: messenger-threads-check
+          securityContext:
+            {{- toYaml .Values.messenger.threadsCheck.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.Version }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - bin/console messenger:consume threads_check -v
+          env:
+            {{- include "threads-tracker.env" . | nindent 12 }}
+          resources:
+            {{- toYaml .Values.messenger.threadsCheck.resources | nindent 12 }}
+      {{- with .Values.messenger.threadsCheck.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.messenger.threadsCheck.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.messenger.threadsCheck.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

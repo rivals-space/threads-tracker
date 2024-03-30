@@ -12,6 +12,11 @@
       "type": "json",
       "path": "composer.json",
       "jsonpath": "$.version"
+    },
+    {
+      "type": "yaml",
+      "path": "helm/threads-tracker/Chart.yaml",
+      "jsonpath": "$.version"
     }
   ],
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"

@@ -1,0 +1,141 @@
+# Default values for threads-tracker.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: ghcr.io/rivals-space/threads-tracker
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+config:
+  mastodon:
+    server: ""
+    token: ""
+    tokenFromSecret:
+      enabled: false
+      secretName: ""
+      secretKey: ""
+  logLevel: "info"
+  redis:
+    host: ""
+    port: 6379
+  database:
+    host: ""
+    port: 5432
+    user: ""
+    name: ""
+    userFromSecret:
+        enabled: false
+        secretName: ""
+        secretKey: ""
+    password: ""
+    passwordFromSecret:
+        enabled: false
+        secretName: ""
+        secretKey: ""
+    postgresVersion: 16
+
+scheduler:
+  podAnnotations: {}
+  podLabels: {}
+
+  podSecurityContext: {}
+
+  securityContext: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+messenger:
+  mastodon:
+    podAnnotations: {}
+    podLabels: {}
+
+    podSecurityContext: {}
+
+    securityContext: {}
+
+    nodeSelector: {}
+
+    tolerations: []
+
+    affinity: {}
+
+    resources: {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+  threadsCheck:
+    podAnnotations: {}
+    podLabels: {}
+
+    podSecurityContext: {}
+
+    securityContext: {}
+
+    nodeSelector: {}
+
+    tolerations: []
+
+    affinity: {}
+
+    resources: {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      # limits:
+      #   memory: 128Mi
+      # requests:
+      #   cpu: 100m
+      #   memory: 128Mi
+
+migrations:
+  podAnnotations: {}
+  podLabels: {}
+
+  podSecurityContext: {}
+
+  securityContext: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+  #   memory: 128Mi
