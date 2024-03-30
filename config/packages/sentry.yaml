@@ -1,0 +1,44 @@
+when@prod:
+  sentry:
+    dsn: '%env(SENTRY_DSN)%'
+    register_error_listener: false
+    register_error_handler: false
+    
+    options:
+      traces_sample_rate: 0.3
+      profiles_sample_rate: 0.3
+      environment: '%env(SENTRY_ENVIRONMENT)%'
+      release: 'threads-tracker-%env(APP_VERSION)%'
+      integrations:
+        - 'Sentry\Integration\IgnoreErrorsIntegration'
+    
+    messenger:
+      enabled: true
+      capture_soft_fails: true
+    
+    tracing:
+      enabled: true
+      dbal:
+        enabled: true
+      cache:
+        enabled: true
+      twig:
+        enabled: false
+      http_client:
+        enabled: true
+  
+  monolog:
+    handlers:
+      sentry:
+        type: sentry
+        level: !php/const Monolog\Logger::ERROR
+        hub_id: Sentry\State\HubInterface
+  
+  services:
+    Monolog\Processor\PsrLogMessageProcessor:
+      tags: {name: monolog.processor, handler: sentry}
+
+    Sentry\Integration\IgnoreErrorsIntegration:
+      arguments:
+        $options:
+          ignore_exceptions: []

@@ -81,4 +81,4 @@ jobs:
           target: app_php_prod
           build-args: |
             PRIVATE_REGISTRY=${{ secrets.PRIVATE_REGISTRY_URL }}
-            APP_VERSION=${{github.ref_name}}
+            APP_VERSION=${{ github.ref_name }}
