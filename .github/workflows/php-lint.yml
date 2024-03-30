@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  unit-tests:
+  lint:
     name: php-cs-fixer
     timeout-minutes: 10
     runs-on: ubuntu-latest
