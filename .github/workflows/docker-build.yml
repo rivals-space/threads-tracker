@@ -38,7 +38,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/rivals-space/threads-stalker
+            ghcr.io/rivals-space/threads-tracker
           tags: |
             type=ref,event=branch,branch=main
             type=ref,event=branch,branch=main,suffix=-${{ steps.vars.outputs.sha_short }}-${{ steps.vars.outputs.timestamp }}

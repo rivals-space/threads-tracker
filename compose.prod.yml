@@ -1,5 +1,5 @@
 x-base: &base
-  image: ghcr.io/rivals-space/threads-stalker:${APP_VERSION:-latest}
+  image: ghcr.io/rivals-space/threads-tracker:${APP_VERSION:-latest}
   tmpfs:
     - /data:mode=770,uid=${UID:-1000},gid=${GID:-1000}
     - /config:mode=770,uid=${UID:-1000},gid=${GID:-1000}

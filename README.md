@@ -1,4 +1,6 @@
-# threads-stalker
+# threads-tracker
+
+track threads user and send alerts when they enable federation
 
 ## how to run
 
