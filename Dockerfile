@@ -1,8 +1,56 @@
 #syntax=docker/dockerfile:1.4
-# Use the base image provided by your internal repository for both production and development builds
-ARG PRIVATE_REGISTRY
+FROM dunglas/frankenphp:latest-php8.3-alpine AS frankenphp_upstream
 
-FROM $PRIVATE_REGISTRY/internal/symfony-base:latest AS base
+FROM frankenphp_upstream AS frankenphp_base
+
+WORKDIR /srv/app
+
+RUN apk add --no-cache \
+		acl \
+        curl \
+		file \
+		gettext \
+		git \
+	;
+
+RUN set -eux; \
+    install-php-extensions \
+        @composer \
+    	amqp \
+    	apcu \
+    	intl \
+		igbinary \
+		opcache \
+    	openssl \
+    	pdo_pgsql \
+		redis \
+    	zip \
+    ; \
+    printf '\nsession.serialize_handler=igbinary\napc.serializer=igbinary' >> "$PHP_INI_DIR/conf.d/docker-php-ext-igbinary.ini"
+
+# Add config
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+COPY --link docker/php/conf.d/app.ini $PHP_INI_DIR/conf.d/
+COPY --link --chown=root:root docker/frankenphp/Caddyfile /etc/caddy/Caddyfile
+
+ARG UID=1000
+ARG GID=1000
+
+# Create a dedicated user and group
+RUN set -eux; \
+	addgroup -g $GID web; \
+    adduser -u $UID -D -G web web; \
+    mkdir -p /home/web; chown $UID:$GID /home/web; \
+    mkdir -p /srv/app; chown $UID:$GID /srv/app; \
+    mkdir -p /var/run/php; chown $UID:$GID /var/run/php
+
+USER web
+WORKDIR /srv/app
+
+HEALTHCHECK --start-period=60s CMD curl -f http://localhost:2019/metrics || exit 1
+CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
+
+FROM frankenphp_base AS base
 # Production build
 FROM base as app_php_prod
 
@@ -12,7 +60,6 @@ RUN set -eux; \
     install-php-extensions excimer
 
 COPY --link docker/php/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
-COPY --link --chown=root:root docker/frankenphp/Caddyfile /etc/caddy/Caddyfile
 
 USER web
 

@@ -8,7 +8,6 @@ x-base: &base
   env_file:
     - .env.prod.local
   environment:
-    SERVER_NAME: ${SERVER_NAME:-localhost, php:80, :9153}
     DATABASE_HOST: 'database'
     DATABASE_PORT: '5432'
     DATABASE_USER: ${POSTGRES_USER:-app}

@@ -25,7 +25,7 @@ services:
         published: ${HTTP3_PORT:-443}
         protocol: udp
     volumes:
-      - ./docker/php/php.development.ini:/usr/local/etc/php/php.ini:ro
+      - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
       - ./docker/frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./:/srv/app
     tmpfs:
