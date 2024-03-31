@@ -87,7 +87,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
   value: "redis://{{ .Values.config.redis.host | required "Missing redis host" }}:{{ .Values.config.redis.port | required "Missing redis port" }}"
 - name: MASTODON_SERVER
   value: {{ .Values.config.mastodon.server | required "Missing mastodon server" | quote }}
-- name: ACCESS_TOKEN
+- name: MASTODON_TOKEN
   {{- if .Values.config.mastodon.tokenFromSecret.enabled }}
     valueFrom:
       secretKeyRef:
