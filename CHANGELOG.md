@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/rivals-space/threads-tracker/compare/v1.0.2...v1.0.3) (2024-03-31)
+
+
+### Bug Fixes
+
+* **messenger:** completly remove console logger in production ([339be92](https://github.com/rivals-space/threads-tracker/commit/339be92998fbae44829ab717c76e426497fa2aed))
+* **notifications-handler:** dismiss notifications in case of error too ([50cb6ba](https://github.com/rivals-space/threads-tracker/commit/50cb6ba1f14b4cfeff40833c11195ce033585251))
+
 ## [1.0.2](https://github.com/rivals-space/threads-tracker/compare/v1.0.1...v1.0.2) (2024-03-31)
 
 
