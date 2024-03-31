@@ -53,8 +53,6 @@ final class FetchMastodonNotificationsMessageHandler
             $this->bus->dispatch(
                 new ProcessMastodonNotificationMessage($notification)
             );
-            $this->logger->notice(sprintf('🗑️ Deleting notification %s', $notification->id));
-            $notificationApi->dismissNotification($notification->id);
         }
     }
 }

@@ -7,6 +7,9 @@ namespace App\MessageHandler;
 use App\Enum\Operation;
 use App\Exception\AlreadyWatchingAccountException;
 use App\Exception\InvalidStatusCommandException;
+use App\MastodonApi\Api\Notifications;
+use App\MastodonApi\Client;
+use App\MastodonApi\Exception\MastodonApiException;
 use App\Message\PostMastodonPrivateMentionMessage;
 use App\Message\ProcessMastodonNotificationMessage;
 use App\Service\WatchThreadsAccountService;
@@ -18,12 +21,16 @@ use Symfony\Component\Messenger\MessageBusInterface;
 final readonly class ProcessMastodonNotificationMessageHandler
 {
     public function __construct(
+        private Client $mastodonApi,
         private MessageBusInterface $bus,
         private WatchThreadsAccountService $watchThreadsAccountService,
         private LoggerInterface $logger,
     ) {
     }
 
+    /**
+     * @throws MastodonApiException
+     */
     public function __invoke(ProcessMastodonNotificationMessage $message): void
     {
         $notificationId = $message->notification->id;
@@ -40,6 +47,7 @@ final readonly class ProcessMastodonNotificationMessageHandler
                 Operation::LIST => $this->handleList($acct),
                 Operation::UNWATCH_ALL => $this->handleUnwatchAll($acct)
             };
+            $this->dismissNotification($notificationId);
         } catch (InvalidStatusCommandException $e) {
             $this->handleError($acct, $e->getMessage());
         }
@@ -129,5 +137,17 @@ final readonly class ProcessMastodonNotificationMessageHandler
                 message: $error
             )
         );
+    }
+
+    /**
+     * @throws MastodonApiException
+     */
+    private function dismissNotification(string $notificationId): void
+    {
+        /** @var Notifications $notificationApi */
+        $notificationApi = $this->mastodonApi->api('notifications');
+
+        $this->logger->notice(sprintf('🗑️ Deleting notification %s', $notificationId));
+        $notificationApi->dismissNotification($notificationId);
     }
 }
