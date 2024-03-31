@@ -80,7 +80,7 @@ ENV APP_ENV=prod
 ENV APP_VERSION=$APP_VERSION
 
 # Development build
-FROM base as app_php_dev
+FROM frankenphp_base as app_php_dev
 
 USER root
 RUN set -eux; \
