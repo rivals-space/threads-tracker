@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1](https://github.com/rivals-space/threads-tracker/compare/v1.0.0...v1.0.1) (2024-03-31)
+
+
+### Bug Fixes
+
+* add missing messenger migrations ([0ab84b2](https://github.com/rivals-space/threads-tracker/commit/0ab84b2ca1678f2a3f357ee56a4021d01b31b719))
+* **dev:** fix dev container build ([4418a8b](https://github.com/rivals-space/threads-tracker/commit/4418a8be25bd9b85ba3a28d324c5b0ad9cda77ce))
+* now correctly checking if already tracking a thread user ([59fca69](https://github.com/rivals-space/threads-tracker/commit/59fca696939a0dc279f62e492cd7970452b06819))
+
 ## 1.0.0 (2024-03-31)
 
 
