@@ -1,7 +1,7 @@
 {
     "type": "project",
     "license": "unlicense",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -103,7 +103,7 @@
             "@phpstan",
             "@psalm"
         ],
-        "reset-db" : "bin/console doctrine:database:drop --force && bin/console doctrine:database:create"
+        "reset-db": "bin/console doctrine:database:drop --force && bin/console doctrine:database:create"
     },
     "conflict": {
         "symfony/symfony": "*"
