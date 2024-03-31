@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\ThreadsUser;
 use App\Entity\Watch;
 use App\Exception\AlreadyWatchingAccountException;
 use App\Repository\WatchRepository;
@@ -26,24 +27,16 @@ class WatchThreadsAccountService
             $watch = new Watch($acct);
         }
 
-        if ($this->isAlreadyWatching($acct, $threadUserName)) {
+        $threadsUser =  $this->accountCheckerService->getOrCreateUser($threadUserName);
+
+        if ($watch->getWatched()->contains($threadsUser)) {
             throw new AlreadyWatchingAccountException(sprintf('Already watching account %s', $threadUserName));
         }
 
-        $watch->addWatched(
-            $this->accountCheckerService->getOrCreateUser($threadUserName)
-        );
+        $watch->addWatched($threadsUser);
 
         $this->watchRepository->save($watch);
 
         return $watch;
-    }
-
-    public function isAlreadyWatching(string $watcher, string $watched): bool
-    {
-        return null !== $this->watchRepository->findOneBy([
-            'watcher' => $watcher,
-            'watched' => $watched,
-        ]);
     }
 }
