@@ -15,6 +15,7 @@ x-base: &base
     DATABASE_NAME: ${POSTGRES_DB:-app}
     DATABASE_VERSION: ${POSTGRES_VERSION:-16}
     MESSENGER_TRANSPORT_DSN: redis://redis:6379
+    LOCK_DSN: redis://redis:6379
     LOG_LEVEL: ${LOG_LEVEL:-info}
 
 services:
