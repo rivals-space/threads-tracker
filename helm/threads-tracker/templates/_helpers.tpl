@@ -96,6 +96,12 @@ app.kubernetes.io/instance: {{ .Release.Name }}
   {{- else }}
   value: {{ .Values.config.mastodon.token | required "Missing mastodon token" | quote }}
   {{- end }}
+{{- if .Values.config.sentry.dsn }}
+- name: SENTRY_DSN
+  value: {{ .Values.config.sentry.dsn | quote }}
+- name: SENTRY_ENVIRONMENT
+  value: {{ .Values.config.sentry.env | quote }}
+{{- end }}
 - name: LOG_LEVEL
   value: {{ .Values.config.logLevel | required "Missing log level" | quote }}
 {{- end }}

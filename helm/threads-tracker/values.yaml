@@ -20,6 +20,9 @@ config:
       enabled: false
       secretName: ""
       secretKey: ""
+  sentry:
+    env: prod
+    dsn: ""
   logLevel: "info"
   redis:
     host: ""
