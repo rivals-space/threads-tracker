@@ -30,7 +30,7 @@ class DefaultScheduleProvider implements ScheduleProviderInterface
      */
     private function getScheduleList(): iterable
     {
-        yield RecurringMessage::every('10 minute', new StartBatchCheckingMessage());
-        yield RecurringMessage::every('10 minute', new FetchMastodonNotificationsMessage());
+        yield RecurringMessage::every('10 minutes', new StartBatchCheckingMessage());
+        yield RecurringMessage::every('10 minutes', new FetchMastodonNotificationsMessage());
     }
 }
