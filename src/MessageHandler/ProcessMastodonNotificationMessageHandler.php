@@ -47,10 +47,10 @@ final readonly class ProcessMastodonNotificationMessageHandler
                 Operation::LIST => $this->handleList($acct),
                 Operation::UNWATCH_ALL => $this->handleUnwatchAll($acct)
             };
-            $this->dismissNotification($notificationId);
         } catch (InvalidStatusCommandException $e) {
             $this->handleError($acct, $e->getMessage());
         }
+        $this->dismissNotification($notificationId);
     }
 
     /**
