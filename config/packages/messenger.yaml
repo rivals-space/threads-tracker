@@ -1,7 +1,14 @@
 framework:
     messenger:
-        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
+        default_bus: messenger.bus.default
+        failure_transport: failed
+        buses:
+            messenger.bus.default:
+                middleware:
+                    - doctrine_ping_connection
+                    - doctrine_close_connection
+                    - doctrine_open_transaction_logger
+                    - doctrine_transaction
 
         transports:
             mastodon: '%env(MESSENGER_TRANSPORT_DSN)%/mastodon'
