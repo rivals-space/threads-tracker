@@ -41,4 +41,5 @@ when@prod:
     Sentry\Integration\IgnoreErrorsIntegration:
       arguments:
         $options:
-          ignore_exceptions: []
+          ignore_exceptions:
+            - Symfony\Component\Console\Exception\CommandNotFoundException
