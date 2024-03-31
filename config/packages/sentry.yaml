@@ -8,7 +8,7 @@ when@prod:
       traces_sample_rate: 0.3
       profiles_sample_rate: 0.3
       environment: '%env(SENTRY_ENVIRONMENT)%'
-      release: 'threads-tracker-%env(APP_VERSION)%'
+      release: 'threads-tracker@%env(APP_VERSION)%'
       integrations:
         - 'Sentry\Integration\IgnoreErrorsIntegration'
     
