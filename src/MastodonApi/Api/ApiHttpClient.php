@@ -11,6 +11,9 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
+use function in_array;
+use function is_array;
+
 readonly class ApiHttpClient
 {
     public function __construct(
@@ -76,20 +79,47 @@ readonly class ApiHttpClient
      */
     private function query(string $method, string $endpoint, array $data = []): ResponseInterface
     {
-        $param = match ($method) {
-            'GET', 'DELETE' => 'query',
-            'POST', 'PUT', 'PATCH' => 'json',
-            default => throw new InvalidArgumentException(sprintf('%s is not a valid method', $method))
-        };
+        if (!in_array($method, ['GET', 'DELETE', 'POST', 'PUT', 'PATCH'])) {
+            throw new InvalidArgumentException(sprintf('%s is not a valid method', $method));
+        }
 
         $this->rateLimiter->reserve(1)->wait();
 
         try {
+            if ('GET' === $method || 'DELETE' === $method) {
+                $queryString = $this->buildQueryString($data);
+                $endpointWithQuery = $queryString ? $endpoint.'?'.$queryString : $endpoint;
+
+                return $this->httpClient->request($method, $endpointWithQuery);
+            }
+
             return $this->httpClient->request($method, $endpoint, [
-                $param => $data,
+                'json' => $data,
             ]);
         } catch (TransportExceptionInterface $e) {
             throw new MastodonApiException($e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    /**
+     * @param array<string, string|string[]|null> $params
+     */
+    private function buildQueryString(array $params): string
+    {
+        $parts = [];
+        foreach ($params as $key => $value) {
+            if (null === $value) {
+                continue;
+            }
+            if (is_array($value)) {
+                foreach ($value as $arrayValue) {
+                    $parts[] = urlencode($key).'[]='.urlencode($arrayValue);
+                }
+            } else {
+                $parts[] = urlencode($key).'='.urlencode($value);
+            }
+        }
+
+        return implode('&', $parts);
     }
 }
