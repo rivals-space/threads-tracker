@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.2](https://github.com/rivals-space/threads-tracker/compare/v1.0.1...v1.0.2) (2024-03-31)
+
+
+### Bug Fixes
+
+* avoid mentioning newly federated user ([016804f](https://github.com/rivals-space/threads-tracker/commit/016804fb7e24b95d94bef4a289599bf56ebf311b))
+* disable console message ([29195fe](https://github.com/rivals-space/threads-tracker/commit/29195feaa34edd33fa01a187f294129a394cca71))
+* **messenger:** add doctrine middlewares for long-running messengers ([a5d6709](https://github.com/rivals-space/threads-tracker/commit/a5d67090dbdb8e7711ede2a821c50e219bd9d233))
+* only dismiss notification when handled successfully ([07975d1](https://github.com/rivals-space/threads-tracker/commit/07975d1cfb030455f1d91d1eea77405f35f40481))
+
 ## [1.0.1](https://github.com/rivals-space/threads-tracker/compare/v1.0.0...v1.0.1) (2024-03-31)
 
 
