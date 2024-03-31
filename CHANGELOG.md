@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.4](https://github.com/rivals-space/threads-tracker/compare/v1.0.3...v1.0.4) (2024-03-31)
+
+
+### Bug Fixes
+
+* **notifications-fetch:** remove index from generated query string ([#11](https://github.com/rivals-space/threads-tracker/issues/11)) ([5e7b92d](https://github.com/rivals-space/threads-tracker/commit/5e7b92dbfe453cf19647e547277f91ccdb5fcb29))
+* only use deprecation channel in dev/test ([4828ea6](https://github.com/rivals-space/threads-tracker/commit/4828ea617806ae9c2df1583c678209fc9b22b232))
+* **sentry:** ignore CommandNotFoundException ([579a4e0](https://github.com/rivals-space/threads-tracker/commit/579a4e01499e7d0913299f661020e5b303382853))
+
 ## [1.0.3](https://github.com/rivals-space/threads-tracker/compare/v1.0.2...v1.0.3) (2024-03-31)
 
 
