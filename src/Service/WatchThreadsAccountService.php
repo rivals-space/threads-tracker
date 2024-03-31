@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Entity\ThreadsUser;
 use App\Entity\Watch;
 use App\Exception\AlreadyWatchingAccountException;
 use App\Repository\WatchRepository;
 
-class WatchThreadsAccountService
+readonly class WatchThreadsAccountService
 {
     public function __construct(
-        private readonly WatchRepository $watchRepository,
-        private readonly ThreadsAccountCheckerService $accountCheckerService,
+        private WatchRepository $watchRepository,
+        private ThreadsAccountCheckerService $accountCheckerService,
     ) {
     }
 
@@ -27,7 +26,7 @@ class WatchThreadsAccountService
             $watch = new Watch($acct);
         }
 
-        $threadsUser =  $this->accountCheckerService->getOrCreateUser($threadUserName);
+        $threadsUser = $this->accountCheckerService->getOrCreateUser($threadUserName);
 
         if ($watch->getWatched()->contains($threadsUser)) {
             throw new AlreadyWatchingAccountException(sprintf('Already watching account %s', $threadUserName));
