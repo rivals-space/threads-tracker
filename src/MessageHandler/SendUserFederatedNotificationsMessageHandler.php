@@ -34,7 +34,7 @@ final class SendUserFederatedNotificationsMessageHandler
         foreach ($threadUser->getWatchers() as $watcher) {
             $sendNotificationMessage = new PostMastodonPrivateMentionMessage(
                 acct: $watcher->getWatcher(),
-                message: sprintf('@%s@threads.net is now visible !', $threadUser->getUsername())
+                message: sprintf('%s from Threads is now visible !', $threadUser->getUsername())
             );
             $this->bus->dispatch($sendNotificationMessage);
         }
