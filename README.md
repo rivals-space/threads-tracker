@@ -15,3 +15,6 @@ echo "MASTODON_TOKEN=$ACCESS_TOKEN" >> .env.prod.local
 docker compose -f compose.prod.yml up -d
 docker compose -f compose.prod.yml ps
 ```
+
+
+Official Account : <a rel="me" href="https://rivals.space/@threads_tracker">https://rivals.space/@threads_tracker</a>
